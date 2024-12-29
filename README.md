@@ -14,3 +14,6 @@ Once here farmers and vendors can login and check out their respective dashboard
 
 ### Application Login page 
 ![mavuno-farmer-login](https://github.com/user-attachments/assets/716604b4-f465-4dd3-9fe9-6eaf987bc9f1)
+
+
+### <b>(The project is still under development)</b>
