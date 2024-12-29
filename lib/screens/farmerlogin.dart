@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mavuno_gain/main.dart';
+import 'package:mavuno_gain/screens/farmersignup.dart';
 
 // Farmer login widget screen 
 class FarmerLogin extends StatelessWidget {
@@ -68,6 +69,16 @@ class FarmerLogin extends StatelessWidget {
                 'Login',
                 style: TextStyle(fontSize: 18),
               ),
+              // validating form
+              // validator: () {
+              //     if (password != pass || value.isEmpty) {
+              //       return 'Confirm password';
+              //     }
+              //     if (value != _passwordController.text) {
+              //       return 'Password does not match';
+              //     }
+              //     return null;
+              //   },
             ),
             SizedBox(height: 20),
             // Sign-up link
@@ -75,7 +86,7 @@ class FarmerLogin extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => MavunoHomePage()),
+                  MaterialPageRoute(builder: (context) => FarmerSignUpPage()),
                 );
               },
               child: Text(

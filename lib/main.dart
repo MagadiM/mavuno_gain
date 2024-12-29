@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mavuno_gain/screens/farmerlogin.dart';
+import 'package:mavuno_gain/screens/vendorlogin.dart';
 
 void main() {
   runApp(MavunoApp());
@@ -60,7 +61,7 @@ class MavunoHomePage extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => MavunoHomePage(), // Update to the correct page
+                                  builder: (context) => VendorLogin(),
                                 ),
                               );
                               print("Login as a vendor");
@@ -110,10 +111,9 @@ class MavunoHomePage extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => MavunoHomePage(),
+                                  builder: (context) => VendorLogin(),
                                 ),
                               );
-                              print('Login as a vendor');
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.green,
@@ -165,22 +165,3 @@ class MavunoHomePage extends StatelessWidget {
     );
   }
 }
-
-// // Placeholder for FarmerLogin page
-// class FarmerLogin extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         backgroundColor: Colors.green,
-//         title: Text('Farmer Login'),
-//       ),
-//       body: Center(
-//         child: Text(
-//           'Farmer Login Page',
-//           style: TextStyle(fontSize: 24),
-//         ),
-//       ),
-//     );
-//   }
-// }

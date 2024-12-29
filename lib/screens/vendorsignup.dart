@@ -1,14 +1,14 @@
-// FarmersSignUpPage is a stateful widget that allows farmers to signup to the application
+// VendorSignUpPage is a stateful widget that allows farmers to signup to the application
 import 'package:flutter/material.dart';
 
-class FarmerSignUpPage extends StatefulWidget {
-  FarmerSignUpPage({super.key});
+class VendorSignUpPage extends StatefulWidget {
+  VendorSignUpPage({super.key});
 
   @override
-  _FarmerSignUpPageState createState() => _FarmerSignUpPageState();
+  _VendorSignUpPageState createState() => _VendorSignUpPageState();
 }
 
-class _FarmerSignUpPageState extends State<FarmerSignUpPage> {
+class _VendorSignUpPageState extends State<VendorSignUpPage> {
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
@@ -27,7 +27,7 @@ class _FarmerSignUpPageState extends State<FarmerSignUpPage> {
       appBar: AppBar(
         backgroundColor: Colors.green,
         title: Text(
-          'Farmer Sign Up',
+          'Vendor Sign Up',
           style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
