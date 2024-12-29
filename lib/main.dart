@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mavuno_gain/screens/farmerlogin.dart';
 
 void main() {
   runApp(MavunoApp());
@@ -16,7 +17,7 @@ class MavunoApp extends StatelessWidget {
   }
 }
 
-//create the home page
+// Create the home page
 class MavunoHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -56,6 +57,12 @@ class MavunoHomePage extends StatelessWidget {
                         children: [
                           ElevatedButton(
                             onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MavunoHomePage(), // Update to the correct page
+                                ),
+                              );
                               print("Login as a vendor");
                             },
                             style: ElevatedButton.styleFrom(
@@ -64,15 +71,21 @@ class MavunoHomePage extends StatelessWidget {
                             child: Text(
                               'Login as Vendor',
                               style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                           SizedBox(height: 10),
                           ElevatedButton(
                             onPressed: () {
-                              print("Login as a Farmer");
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => FarmerLogin(),
+                                ),
+                              );
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.green,
@@ -80,9 +93,10 @@ class MavunoHomePage extends StatelessWidget {
                             child: Text(
                               'Login as Farmer',
                               style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ],
@@ -93,6 +107,12 @@ class MavunoHomePage extends StatelessWidget {
                         children: [
                           ElevatedButton(
                             onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MavunoHomePage(),
+                                ),
+                              );
                               print('Login as a vendor');
                             },
                             style: ElevatedButton.styleFrom(
@@ -103,16 +123,22 @@ class MavunoHomePage extends StatelessWidget {
                               child: Text(
                                 'Login as Vendor',
                                 style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
                           SizedBox(width: 10),
                           ElevatedButton(
                             onPressed: () {
-                              print('Login as a Farmer');
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => FarmerLogin(), 
+                                ),
+                              );
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.green,
@@ -122,9 +148,10 @@ class MavunoHomePage extends StatelessWidget {
                               child: Text(
                                 'Login as Farmer',
                                 style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
@@ -138,3 +165,22 @@ class MavunoHomePage extends StatelessWidget {
     );
   }
 }
+
+// // Placeholder for FarmerLogin page
+// class FarmerLogin extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         backgroundColor: Colors.green,
+//         title: Text('Farmer Login'),
+//       ),
+//       body: Center(
+//         child: Text(
+//           'Farmer Login Page',
+//           style: TextStyle(fontSize: 24),
+//         ),
+//       ),
+//     );
+//   }
+// }
