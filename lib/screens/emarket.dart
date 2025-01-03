@@ -90,7 +90,7 @@ class _ECommercePageState extends State<ECommercePage> {
                     ElevatedButton(
                       onPressed: _addItem,
                       child: Text('Add Item'),
-                      style: ElevatedButton.styleFrom(primary: Colors.blueAccent),
+                      style: ElevatedButton.styleFrom(colors: Colors.blueAccent),
                     ),
                   ],
                 ),
