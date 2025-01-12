@@ -1,150 +1,145 @@
 import 'package:flutter/material.dart';
+import 'dart:io'; // For File
+import 'package:image_picker/image_picker.dart'; // For selecting images
+import 'package:http/http.dart' as http; // For making HTTP requests
+import 'dart:convert'; // For encoding data
 
-class ECommercePage extends StatefulWidget {
+class ECommerceLandingPage extends StatefulWidget {
   @override
-  _ECommercePageState createState() => _ECommercePageState();
+  _ECommerceLandingPageState createState() => _ECommerceLandingPageState();
 }
 
-class _ECommercePageState extends State<ECommercePage> {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _priceController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
+class _ECommerceLandingPageState extends State<ECommerceLandingPage> {
+  List<dynamic> items = [];
+  File? _image;
+  final picker = ImagePicker();
 
-  // List to store items
-  List<Map<String, String>> _items = [];
+  @override
+  void initState() {
+    super.initState();
+    fetchItems();
+  }
 
-  void _addItem() {
-    if (_formKey.currentState!.validate()) {
-      setState(() {
-        _items.add({
-          'name': _nameController.text,
-          'price': _priceController.text,
-          'description': _descriptionController.text,
+  Future<void> fetchItems() async {
+    final url = 'https://your-backend-api.com/items'; // Replace with your backend URL
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        setState(() {
+          items = json.decode(response.body);
         });
-      });
-
-      // Clear input fields after adding
-      _nameController.clear();
-      _priceController.clear();
-      _descriptionController.clear();
+      } else {
+        throw Exception('Failed to load items');
+      }
+    } catch (e) {
+      print('Error fetching items: $e');
     }
+  }
+
+  Future<void> uploadItem(String name, String description) async {
+    final url = 'https://your-backend-api.com/upload'; // Replace with your upload endpoint
+    try {
+      if (_image == null) return;
+      final request = http.MultipartRequest('POST', Uri.parse(url));
+      request.fields['name'] = name;
+      request.fields['description'] = description;
+      request.files.add(await http.MultipartFile.fromPath('image', _image!.path));
+
+      final response = await request.send();
+      if (response.statusCode == 200) {
+        print('Item uploaded successfully!');
+        fetchItems(); // Refresh items
+      } else {
+        print('Failed to upload item');
+      }
+    } catch (e) {
+      print('Error uploading item: $e');
+    }
+  }
+
+  Future<void> pickImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      }
+    });
+  }
+
+  void showUploadDialog() {
+    final nameController = TextEditingController();
+    final descriptionController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Upload Item'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: nameController,
+                decoration: InputDecoration(labelText: 'Item Name'),
+              ),
+              TextField(
+                controller: descriptionController,
+                decoration: InputDecoration(labelText: 'Item Description'),
+              ),
+              SizedBox(height: 10),
+              ElevatedButton.icon(
+                onPressed: pickImage,
+                icon: Icon(Icons.image),
+                label: Text('Pick Image'),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                uploadItem(nameController.text, descriptionController.text);
+                Navigator.pop(context);
+              },
+              child: Text('Upload'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('E-Commerce Vendor Page'),
-        backgroundColor: Colors.blueAccent,
+        title: Text('E-Commerce Landing Page'),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Form for adding new items
-              Text(
-                'Add New Item',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 10),
-              Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: _nameController,
-                      decoration: InputDecoration(labelText: 'Item Name'),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter the item name';
-                        }
-                        return null;
-                      },
-                    ),
-                    TextFormField(
-                      controller: _priceController,
-                      decoration: InputDecoration(labelText: 'Price'),
-                      keyboardType: TextInputType.number,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter the price';
-                        }
-                        return null;
-                      },
-                    ),
-                    TextFormField(
-                      controller: _descriptionController,
-                      decoration: InputDecoration(labelText: 'Description'),
-                      maxLines: 3,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter the description';
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: _addItem,
-                      child: Text('Add Item'),
-                      style: ElevatedButton.styleFrom(colors: Colors.blueAccent),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 30),
-              // Display the list of added items
-              Text(
-                'Available Items',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 10),
-              _items.isEmpty
-                  ? Text(
-                      'No items available. Add new items to display them here.',
-                      style: TextStyle(color: Colors.grey),
-                    )
-                  : GridView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                      ),
-                      itemCount: _items.length,
-                      itemBuilder: (context, index) {
-                        final item = _items[index];
-                        return Card(
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                          elevation: 4,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  item['name']!,
-                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                                ),
-                                Text(item['price']!, style: TextStyle(color: Colors.green)),
-                                Text(
-                                  item['description']!,
-                                  style: TextStyle(fontSize: 12, color: Colors.grey[700]),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-            ],
-          ),
-        ),
+      body: items.isEmpty
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                final item = items[index];
+                return Card(
+                  child: ListTile(
+                    leading: item['image'] != null
+                        ? Image.network(item['image'], width: 50, height: 50)
+                        : Icon(Icons.image, size: 50),
+                    title: Text(item['name']),
+                    subtitle: Text(item['description']),
+                  ),
+                );
+              },
+            ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: showUploadDialog,
+        child: Icon(Icons.add),
       ),
     );
   }

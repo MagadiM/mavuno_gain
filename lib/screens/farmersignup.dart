@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 class FarmerSignUpPage extends StatefulWidget {
-  FarmerSignUpPage({super.key});
+  const FarmerSignUpPage({super.key});
 
   @override
   _FarmerSignUpPageState createState() => _FarmerSignUpPageState();

@@ -4,7 +4,7 @@ import 'package:mavuno_gain/screens/farmersignup.dart';
 
 // Farmer login widget screen 
 class FarmerLogin extends StatelessWidget {
-  FarmerLogin({super.key});
+  const FarmerLogin({super.key});
 
   @override
   Widget build(BuildContext context) {

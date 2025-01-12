@@ -7,6 +7,8 @@ void main() {
 }
 
 class MavunoApp extends StatelessWidget {
+  const MavunoApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,6 +22,8 @@ class MavunoApp extends StatelessWidget {
 
 // Create the home page
 class MavunoHomePage extends StatelessWidget {
+  const MavunoHomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

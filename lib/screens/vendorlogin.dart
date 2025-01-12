@@ -4,7 +4,7 @@ import 'package:mavuno_gain/screens/vendorsignup.dart';
 
 // Vendor login widget screen 
 class VendorLogin extends StatelessWidget {
-  VendorLogin({super.key});
+  const VendorLogin({super.key});
 
   @override
   Widget build(BuildContext context) {

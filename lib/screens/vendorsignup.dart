@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 class VendorSignUpPage extends StatefulWidget {
-  VendorSignUpPage({super.key});
+  const VendorSignUpPage({super.key});
 
   @override
   _VendorSignUpPageState createState() => _VendorSignUpPageState();
